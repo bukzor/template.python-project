@@ -1,0 +1,69 @@
+# Copier template configuration
+# Inspired by cookiecutter templates and Simon Willison's dynamic GitHub template pattern:
+# https://simonwillison.net/2021/Aug/28/dynamic-github-repository-templates/
+
+_subdirectory: copier-template
+project_name:
+  type: str
+  help: What is your project name?
+  placeholder: my-awesome-project
+  validator: >-
+    {% if not (project_name | regex_search('^[a-z][a-z0-9-]*[a-z0-9]$')) %}
+    Project name must be lowercase, start with a letter, contain only letters,
+    numbers, and hyphens, and not end with a hyphen {% endif %}
+
+description:
+  type: str
+  help: Brief description of your project
+  default: ""
+
+author_name:
+  type: str
+  help: Your full name
+  default:
+    "{{ 'git config user.name' | trim if 'git config user.name' else '' }}"
+
+author_email:
+  type: str
+  help: Your email address
+  default:
+    "{{ 'git config user.email' | trim if 'git config user.email' else '' }}"
+
+github_username:
+  type: str
+  help: Your GitHub username
+  default: ""
+
+python_version:
+  type: str
+  help: Minimum Python version
+  default: "3.13"
+  choices:
+    - "3.10"
+    - "3.11"
+    - "3.12"
+    - "3.13"
+
+# Derived variables
+project_slug:
+  type: str
+  default: "{{ project_name | lower | replace('-', '_') }}"
+  when: false # Don't ask user, just compute
+
+hyphenated:
+  type: str
+  default: "{{ project_name | lower }}"
+  when: false
+
+underscored:
+  type: str
+  default: "{{ project_name | lower | replace('-', '_') }}"
+  when: false
+
+_templates_suffix: .jinja
+_envops:
+  block_start_string: "{%"
+  block_end_string: "%}"
+  variable_start_string: "{{"
+  variable_end_string: "}}"
+  keep_trailing_newline: true

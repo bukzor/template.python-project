@@ -1,0 +1,1 @@
+CLAUDE.copier.md

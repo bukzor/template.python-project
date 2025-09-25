@@ -1,0 +1,73 @@
+#!/bin/bash
+# Acceptance test for the copier template
+set -euo pipefail
+
+# Configuration
+TEST_NAME="acceptance-test-$(date +%s)"
+TEST_DIR="trash/$TEST_NAME"
+DESCRIPTION="Acceptance test for copier template"
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
+
+echo -e "${YELLOW}Running acceptance test for copier template...${NC}"
+
+# Clean up any existing test directory
+if [ -d "$TEST_DIR" ]; then
+    echo "Removing existing test directory: $TEST_DIR"
+    rm -rf "$TEST_DIR"
+fi
+
+# Step 1: Generate test project
+echo -e "${YELLOW}Step 1: Generating test project...${NC}"
+./lib/ci/copier --no-input --name "$TEST_NAME" --description "$DESCRIPTION" --destination "$TEST_DIR"
+
+if [ $? -ne 0 ]; then
+    echo -e "${RED}❌ Template generation failed${NC}"
+    exit 1
+fi
+
+echo -e "${GREEN}✅ Template generated successfully${NC}"
+
+# Step 2: Initialize git repo and run pre-commit hooks
+echo -e "${YELLOW}Step 2: Initializing git repo and running pre-commit hooks...${NC}"
+cd "$TEST_DIR"
+
+# Initialize git repo so pre-commit runs in the correct directory
+git init .
+git add .
+
+# Allow direnv and load environment
+direnv allow .
+eval "$(direnv export bash)"
+
+# Run pre-commit hooks
+uv run pre-commit run --all-files
+
+if [ $? -ne 0 ]; then
+    echo -e "${RED}❌ Pre-commit hooks failed${NC}"
+    echo "Generated project directory: $(pwd)"
+    exit 1
+fi
+
+echo -e "${GREEN}✅ All pre-commit hooks passed${NC}"
+
+# Step 3: Basic functionality test
+echo -e "${YELLOW}Step 3: Testing basic Python functionality...${NC}"
+python main.py
+
+if [ $? -ne 0 ]; then
+    echo -e "${RED}❌ Basic Python execution failed${NC}"
+    exit 1
+fi
+
+echo -e "${GREEN}✅ Basic Python execution successful${NC}"
+
+# Return to original directory
+cd - > /dev/null
+
+echo -e "${GREEN}🎉 Acceptance test passed! Template is working correctly.${NC}"
+echo "Test project generated at: $TEST_DIR"

@@ -1,0 +1,149 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Copier script for both CI and interactive use
+# Can be used to generate/test the template locally or from GitHub Actions
+
+print_usage() {
+  cat <<'EOF'
+Usage: ./lib/ci/copier [OPTIONS]
+
+Generate a project from the copier template.
+
+OPTIONS:
+    --name NAME             Project name (defaults to current directory name or prompts)
+    --description DESC      Project description (defaults to empty)
+    --author-name NAME      Author's full name (defaults from git config)
+    --author-email EMAIL    Author's email (defaults from git config)
+    --github-username USER  GitHub username
+    --python-version VER    Python version (3.10, 3.11, 3.12, 3.13, default: 3.13)
+    --no-input              Don't prompt for input (use defaults/provided values)
+    --destination DIR       Destination directory (defaults to current directory)
+    --help                  Show this help message
+
+EXAMPLES:
+    # Interactive mode
+    ./lib/ci/copier
+
+    # Non-interactive with specific values
+    ./lib/ci/copier --no-input --name my-project --description "My awesome project"
+
+    # Test in a temporary directory
+    ./lib/ci/copier --destination /tmp/test-project --name test-project
+
+EOF
+}
+
+# Default values
+PROJECT_NAME=""
+DESCRIPTION=""
+AUTHOR_NAME=""
+AUTHOR_EMAIL=""
+GITHUB_USERNAME=""
+PYTHON_VERSION="3.13"
+NO_INPUT=false
+DESTINATION="."
+
+# Parse command line arguments
+while [[ $# -gt 0 ]]; do
+  case $1 in
+  --name)
+    PROJECT_NAME="$2"
+    shift 2
+    ;;
+  --description)
+    DESCRIPTION="$2"
+    shift 2
+    ;;
+  --author-name)
+    AUTHOR_NAME="$2"
+    shift 2
+    ;;
+  --author-email)
+    AUTHOR_EMAIL="$2"
+    shift 2
+    ;;
+  --github-username)
+    GITHUB_USERNAME="$2"
+    shift 2
+    ;;
+  --python-version)
+    PYTHON_VERSION="$2"
+    shift 2
+    ;;
+  --no-input)
+    NO_INPUT=true
+    shift
+    ;;
+  --destination)
+    DESTINATION="$2"
+    shift 2
+    ;;
+  --help)
+    print_usage
+    exit 0
+    ;;
+  *)
+    echo "Unknown option: $1" >&2
+    print_usage >&2
+    exit 1
+    ;;
+  esac
+done
+
+# Get script directory (template root)
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+TEMPLATE_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"
+
+# Ensure copier is available
+if ! command -v uv &>/dev/null; then
+  echo "Error: uv not found. Install it from https://docs.astral.sh/uv/getting-started/installation/" >&2
+  exit 1
+fi
+
+# Use uv run copier to ensure we use the dev dependency version
+COPIER_CMD="uv run copier"
+
+# Set default project name if not provided
+if [[ -z "$PROJECT_NAME" && "$NO_INPUT" == true ]]; then
+  PROJECT_NAME="$(basename "$(pwd)")"
+fi
+
+# Build copier command
+COPIER_ARGS=(
+  copy
+  "$TEMPLATE_DIR"
+  "$DESTINATION"
+)
+
+# Add data arguments if provided
+if [[ -n "$PROJECT_NAME" ]]; then
+  COPIER_ARGS+=(--data "project_name=$PROJECT_NAME")
+fi
+if [[ -n "$DESCRIPTION" ]]; then
+  COPIER_ARGS+=(--data "description=$DESCRIPTION")
+fi
+if [[ -n "$AUTHOR_NAME" ]]; then
+  COPIER_ARGS+=(--data "author_name=$AUTHOR_NAME")
+fi
+if [[ -n "$AUTHOR_EMAIL" ]]; then
+  COPIER_ARGS+=(--data "author_email=$AUTHOR_EMAIL")
+fi
+if [[ -n "$GITHUB_USERNAME" ]]; then
+  COPIER_ARGS+=(--data "github_username=$GITHUB_USERNAME")
+fi
+if [[ -n "$PYTHON_VERSION" ]]; then
+  COPIER_ARGS+=(--data "python_version=$PYTHON_VERSION")
+fi
+
+# Add no-input flag if specified
+if [[ "$NO_INPUT" == true ]]; then
+  COPIER_ARGS+=(--defaults)
+fi
+
+# Add overwrite flag (for testing)
+COPIER_ARGS+=(--overwrite)
+
+PS4=$'\n\033[36m$\033[0m '
+set -x
+exec $COPIER_CMD "${COPIER_ARGS[@]}"

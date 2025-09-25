@@ -31,16 +31,16 @@ uv run pre-commit run --all-files
 - ✅ **Pre-commit hooks** using `uv run` for consistent tooling
 - ✅ **direnv** support with `.envrc`
 - ✅ **Minimal gitignore** with only build products
-- ✅ **Python 3.13+** requirement
+- ✅ **Python {{ python_version }}+** requirement
 
 ## Project Setup
 
 This project was generated from a copier template. The template has already been
 configured with your project details:
 
-- Project name: bukzor-template-python-project
-- Description: Python project template with copier support
-- Python version: 3.13
+- Project name: {{ project_name }}
+- Description: {{ description }}
+- Python version: {{ python_version }}
 
 To add dependencies, edit `pyproject.toml` and run `uv sync`.
 

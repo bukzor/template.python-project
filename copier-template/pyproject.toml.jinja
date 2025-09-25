@@ -1,9 +1,9 @@
 [project]
-name = "bukzor-template-python-project"
+name = "{{ project_name }}"
 version = "0.1.0"
-description = "Python project template with copier support"
+description = "{{ description }}"
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">={{ python_version }}"
 dependencies = []
 
 [dependency-groups]
@@ -24,7 +24,7 @@ addopts = "--doctest-modules"
 typeCheckingMode = "strict"
 analyzeUnannotatedFunctions = true
 reportIncompatibleMethodOverride = "error"
-pythonVersion = "3.13"
+pythonVersion = "{{ python_version }}"
 enableTypeIgnoreComments = true
 reportPrivateUsage = "warning"
 reportConstantRedefinition = "error"

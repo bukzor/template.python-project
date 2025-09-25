@@ -1,13 +1,13 @@
-# {{PROJECT_NAME}}
+# {{ project_name }}
 
-{{PROJECT_DESCRIPTION}}
+{{ description }}
 
 ## Installation
 
 ```bash
 # Clone the repository
-git clone https://github.com/bukzor/{{PROJECT_NAME}}
-cd {{PROJECT_NAME}}
+git clone https://github.com/{% if github_username %}{{ github_username }}{% else %}USERNAME{% endif %}/{{ project_name }}
+cd {{ project_name }}
 
 # Install dependencies
 uv sync
@@ -24,7 +24,7 @@ uv run python main.py
 
 # Or install and run as a package
 uv pip install -e .
-{{PROJECT_NAME}}
+{{ project_slug }}
 ```
 
 ## Development

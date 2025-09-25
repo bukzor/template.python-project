@@ -1,0 +1,67 @@
+name: Test copier template
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  test-template:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install copier and uv
+        run: |
+          pip install copier
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+
+      - name: Test template generation
+        run: |
+          # Generate project from template using test data
+          copier copy . /tmp/test-project --data-file input-for-test.yml --overwrite
+
+          # Show what was generated
+          echo "Generated project structure:"
+          find /tmp/test-project -type f | head -20
+
+          # Test that the generated project works
+          cd /tmp/test-project
+
+          # Check that files have correct content
+          echo "Checking generated pyproject.toml:"
+          grep 'name = "test-python-project"' pyproject.toml
+          grep 'description = "A test project generated from the copier template"' pyproject.toml
+          grep 'requires-python = ">=3.13"' pyproject.toml
+
+          # Test that development workflow works
+          uv sync
+          uv run pre-commit install
+          uv run pre-commit run --all-files
+          uv run pyright
+
+          echo "✅ Template generation and validation successful!"
+
+      - name: Test script usage
+        run: |
+          # Test the copier script directly
+          ./lib/ci/copier --help
+
+          ./lib/ci/copier \
+            --no-input \
+            --name script-test \
+            --description "Testing the script" \
+            --destination /tmp/script-test
+
+          echo "Generated files:"
+          ls -la /tmp/script-test/
+
+          echo "✅ Script test successful!"
