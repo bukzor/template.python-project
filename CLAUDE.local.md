@@ -1,1 +1,1 @@
-CLAUDE.copier.md
+CLAUDE.local-devenv.md
