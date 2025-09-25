@@ -1,9 +1,9 @@
 # Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
-_commit: c330cf9
+_commit: 93ff74c
 _src_path: /home/bukzor/repo/github.com/bukzor/template.python-project
 author_email: git config user.email
 author_name: git config user.name
 description: Python project template with copier support
-github_username: ""
+github_username: ''
 project_name: bukzor-template-python-project
-python_version: "3.13"
+python_version: '3.13'
