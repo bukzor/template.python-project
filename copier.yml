@@ -3,6 +3,12 @@
 # https://simonwillison.net/2021/Aug/28/dynamic-github-repository-templates/
 
 _subdirectory: copier-template
+
+# Files that should not be overwritten if they already exist
+# This allows users to customize these files without worrying about updates
+_skip_if_exists:
+  - README.md
+  - CLAUDE.md
 project_name:
   type: str
   help: What is your project name?
