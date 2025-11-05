@@ -1,56 +1,70 @@
-# bukzor-template-python-project
+# Python Project Template
 
-Python project template with copier support
+A [copier](https://copier.readthedocs.io/) template for Python projects with
+modern tooling and best practices.
 
-## Installation
+## Features
+
+- **Python 3.10+** with configurable minimum version
+- **[uv](https://github.com/astral-sh/uv)** for fast dependency management
+- **[Black](https://black.readthedocs.io/)** for code formatting
+- **[Pyright](https://github.com/microsoft/pyright)** in strict mode for type
+  checking
+- **[pre-commit](https://pre-commit.com/)** hooks integrated with uv
+- **direnv** support with `.envrc`
+- **Local development environment** package structure (`lib/local-devenv/`)
+
+## Using This Template
+
+Create a new project from this template:
 
 ```bash
-# Clone the repository
-git clone https://github.com/USERNAME/bukzor-template-python-project
-cd bukzor-template-python-project
+# Using copier
+copier copy gh:bukzor/template.python-project your-project-name
+cd your-project-name
+
+# Install dependencies and hooks
+uv sync
+uv run pre-commit install
+
+# Verify setup
+uv run pre-commit run --all-files
+```
+
+## Template Development
+
+This repository is also an instance of itself (dogfooding). To develop the
+template:
+
+```bash
+# Clone the template repository
+git clone https://github.com/bukzor/template.python-project
+cd template.python-project
 
 # Install dependencies
 uv sync
 
-# Install pre-commit hooks (optional but recommended)
-uv run pre-commit install
+# Run acceptance tests
+./lib/ci/acceptance-test
+
+# Test template generation
+./lib/ci/copier
 ```
 
-## Usage
+The template source lives in `copier-template/`. Changes there affect newly
+generated projects.
 
-```bash
-# Run the main script
-uv run python main.py
+## What Gets Generated
 
-# Or install and run as a package
-uv pip install -e .
-bukzor_template_python_project
-```
+Projects created from this template include:
 
-## Development
-
-```bash
-# Format code
-uv run black .
-
-# Type check
-uv run pyright
-
-# Run tests
-uv run pytest
-
-# Run pre-commit hooks
-uv run pre-commit run --all-files
-```
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Run the development commands above
-5. Submit a pull request
+- `pyproject.toml` - Python project configuration with development dependencies
+- `.pre-commit-config.yaml` - Pre-commit hooks for black and pyright
+- `main.py` - Simple starter file
+- `lib/local-devenv/` - Template-managed development tooling (future feature)
+- `.envrc` - direnv configuration for automatic environment activation
+- CI workflows for testing
 
 ## License
 
-MIT License (or your preferred license)
+MIT License

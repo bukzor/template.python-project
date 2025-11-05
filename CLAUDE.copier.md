@@ -32,7 +32,7 @@ and verify output.
 template.python-project/
 ├── copier.yml                           # Copier configuration
 ├── lib/ci/copier                        # Script for template generation
-├── {{project_name}}/                    # Template directory (gets resolved to actual project)
+├── copier-template/                     # Template directory (gets copied to new projects)
 │   ├── pyproject.toml.jinja             # Template files with variables
 │   ├── CLAUDE.md.jinja
 │   ├── README.md.jinja
@@ -40,8 +40,7 @@ template.python-project/
 ├── .github/workflows/
 │   ├── setup.yml                        # Auto-templating on GitHub
 │   └── test-template.yml                # Template acceptance testing
-├── input-for-test.yml                   # Test data for template generation
-└── ... (development files - should NOT be copied)
+└── ... (development files - NOT copied to generated projects)
 ```
 
 ## Key References
@@ -74,8 +73,8 @@ template.python-project/
 ## Current copier.yml Configuration
 
 ```yaml
-# Use the {{project_name}} subdirectory as the actual template
-_subdirectory: "{{project_name}}"
+# Use the copier-template subdirectory as the actual template
+_subdirectory: copier-template
 project_name:
   type: str
   help: What is your project name?
@@ -84,15 +83,9 @@ project_name:
 
 ## Configuration Notes
 
-Current `copier.yml` uses `_subdirectory: "{{project_name}}"`. The copier
-documentation shows different patterns:
-
-- Quick-start: `{{project_name}}/` directory at template root (no
-  `_subdirectory`)
-- Subdirectory docs: Static names like `_subdirectory: template`
-
-Template generation behavior should be verified and configuration adjusted if
-needed.
+Current `copier.yml` uses `_subdirectory: copier-template`. This keeps the
+template source files cleanly separated from the repository's own development
+files (CI scripts, documentation about the template itself, etc.).
 
 ## Test Command
 
@@ -119,7 +112,7 @@ ls -la trash/test-copier-template/
 ### Key Files to Check
 
 - `copier.yml` - Current configuration
-- `{{project_name}}/` - Template files (correctly structured)
+- `copier-template/` - Template files (correctly structured)
 - `lib/ci/copier` - Working script for template generation
 
 ### Next Steps

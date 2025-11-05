@@ -1,10 +1,13 @@
 # Claude Setup Instructions
 
-This is a Python project template optimized for Claude Code development.
+This repository is both:
+
+1. A copier template for creating Python projects
+2. A working instance of itself (dogfooding) for development and testing
 
 ## Quick Start
 
-After creating a new repo from this template:
+For template development:
 
 ```bash
 # Install development dependencies
@@ -15,6 +18,9 @@ uv run pre-commit install
 
 # Test the setup
 uv run pre-commit run --all-files
+
+# Run acceptance tests
+./lib/ci/acceptance-test
 ```
 
 ## Development Commands
@@ -33,16 +39,17 @@ uv run pre-commit run --all-files
 - ✅ **Minimal gitignore** with only build products
 - ✅ **Python 3.13+** requirement
 
-## Project Setup
+## Template Development
 
-This project was generated from a copier template. The template has already been
-configured with your project details:
+The template source files live in `copier-template/`. Changes there will affect
+newly generated projects. This repository's root files are a generated instance
+for testing the template output (dogfooding).
 
-- Project name: bukzor-template-python-project
-- Description: Python project template with copier support
-- Python version: 3.13
+To modify the template, edit files in `copier-template/` and test with:
 
-To add dependencies, edit `pyproject.toml` and run `uv sync`.
+```bash
+./lib/ci/copier
+```
 
 ## Pre-commit Hooks
 
