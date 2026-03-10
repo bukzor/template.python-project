@@ -3,6 +3,8 @@
 # a command
 set -eu
 
+REPO="${REPO:-$(git rev-parse --show-toplevel)}"
+
 # prevent raciness/flakiness
 mkdir -p "$REPO/node_modules"
 flock "$REPO/node_modules" \
