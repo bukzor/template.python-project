@@ -15,11 +15,14 @@ dev = [
   "pre-commit>=4.3.0",
   "pyright>=1.1.405",
   "pytest>=8.4.2",
+  "pytest-pyright>=0.0.7",
   "pyupgrade>=3.19.0",
 ]
 
 [tool.pytest.ini_options]
 addopts = "--doctest-modules"
+python_classes = ["Describe*", "When*", "Test*"]
+python_functions = ["it_*", "test_*"]
 
 [tool.pyright]
 typeCheckingMode = "strict"
@@ -32,4 +35,4 @@ reportConstantRedefinition = "error"
 reportIncompatibleVariableOverride = "error"
 reportMissingImports = "error"
 reportMissingTypeStubs = false
-exclude = [".venv", "__pycache__", "node_modules", "trash"]
+exclude = [".venv", "__pycache__", "node_modules", "trash", "typesafety"]
