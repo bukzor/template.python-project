@@ -1,9 +1,28 @@
+--- # workaround: anthropics/claude-code#13003
+requires:
+    - Skill(llm-kb)
+---
+
 # Claude Setup Instructions
 
 This repository is both:
 
 1. A copier template for creating Python projects
 2. A working instance of itself (dogfooding) for development and testing
+
+## Knowledge bases
+
+Structured `.kb/` knowledge lives here (pattern: `Skill(llm-kb)`; validate edits
+with `llm.kb-validate` before committing):
+
+- `discourse.kb/` — the **descriptive** design record (what's true / what
+  follows), per `Skill(llm-discourse-graph)`: architecture decisions and the
+  reasoning behind them.
+- `docs/dev/design/` + `docs/dev/technical-policy.kb/` — the **normative**
+  design tower (goals, and the design rules that constrain them), per
+  `Skill(llm-design-kb)`.
+
+Each scope's own `CLAUDE.md` governs what belongs there.
 
 ## Quick Start
 
