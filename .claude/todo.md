@@ -8,6 +8,8 @@ status: active
 - [ ] [todo.kb/2026-06-27-000-harvest-template-improvements-from-basedpyright-as-pyright.md](todo.kb/2026-06-27-000-harvest-template-improvements-from-basedpyright-as-pyright.md)
       — triage `basedpyright-as-pyright` scaffold→final diff into template
       improvements
+- [ ] [todo.kb/2026-06-28-000-adopt-buck2-as-the-polyglot-spine-rename--pythonnode-proof.md](todo.kb/2026-06-28-000-adopt-buck2-as-the-polyglot-spine-rename--pythonnode-proof.md)
+      — rename + Python+Node buck proof + cell-alias spike + third-party derisk
 
 ## Later
 
