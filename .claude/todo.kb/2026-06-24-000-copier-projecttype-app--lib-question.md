@@ -1,6 +1,19 @@
 ---
 managed-by: Skill(llm-subtask)
 status: open
+cost-benefit-sweh:
+  timebox:
+    "@value": 3
+    rationale:
+      copier question + lib scaffold (build-system, package layout) +
+      copier-update validation against basedpyright consumer
+    confidence: unsure
+  benefit-2w:
+    "@value": 1
+    rationale:
+      unblocks library scaffolds; basedpyright already hand-converted, next lib
+      consumer within 2w uncertain
+    confidence: tentative
 ---
 
 # copier `project_type: app | lib` question

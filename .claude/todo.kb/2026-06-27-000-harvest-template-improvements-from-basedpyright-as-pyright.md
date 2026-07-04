@@ -1,6 +1,19 @@
 ---
 managed-by: Skill(llm-subtask)
 status: open
+cost-benefit-sweh:
+  timebox:
+    "@value": 2
+    rationale:
+      mechanical diff triage; scaffold-baseline tag verified present 2026-07-03,
+      so the clean delta is recoverable
+    confidence: unsure
+  benefit-2w:
+    "@value": 0.5
+    rationale:
+      template fixes pay out only at the next scaffold; 3 findings already
+      pre-triaged
+    confidence: tentative
 ---
 
 # Harvest template improvements from the `basedpyright-as-pyright` diff

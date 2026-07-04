@@ -1,6 +1,16 @@
 ---
 managed-by: Skill(llm-subtask)
 status: active
+cost-benefit-sweh:
+  timebox:
+    "@value": 0
+    rationale:
+      "pure aggregator: all items are child todo.kb refs, Later section empty;
+      children carry their own ratings"
+    confidence: confident
+  benefit-2w:
+    "@value": 0
+    confidence: confident
 ---
 
 - [ ] [todo.kb/2026-06-24-000-copier-projecttype-app--lib-question.md](todo.kb/2026-06-24-000-copier-projecttype-app--lib-question.md)

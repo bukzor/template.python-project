@@ -1,6 +1,25 @@
 ---
 managed-by: Skill(llm-subtask)
 status: open
+cost-benefit-sweh:
+  timebox:
+    "@value": 12
+    rationale:
+      rename + two-toolchain buckify + cell-alias spike + third-party derisk;
+      high complexity, reassess after the spike
+    confidence: tentative
+  benefit-2w:
+    "@value": 1
+    rationale:
+      strategic bet; unification value is long-horizon, little realized within
+      2w
+    confidence: tentative
+  cost-of-delay-2w:
+    "@value": 0.2
+    rationale:
+      design fully recorded in discourse.kb + design tower; decay limited to
+      unrecorded nuance
+    confidence: unsure
 ---
 
 # Adopt buck2 as the polyglot spine: rename + Python+Node proof
