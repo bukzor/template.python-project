@@ -1,6 +1,6 @@
 ---
 why:
-  - 010-mission.kb/polyglot-self-similar-template.md
+  - ../010-mission.kb/polyglot-self-similar-template.md
 ---
 
 # Goal: uniform polyglot model

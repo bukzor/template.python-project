@@ -1,17 +1,13 @@
-$schema: "http://json-schema.org/draft-07/schema#"
+# yaml-language-server: $schema=https://json-schema.org/draft/2020-12/schema
+$schema: "https://json-schema.org/draft/2020-12/schema"
 description: >
   Design-tower goal — how we accomplish the mission. The body states the goal;
   why[] links upward to the mission (or a higher goal) it serves.
-type: object
-additionalProperties: false
+$ref: "skill://llm-design-kb/jsonschema/layer-entry.jsonschema.yaml#base"
 properties:
-  why:
-    description: Paths to the mission or higher goal this goal serves.
-    type: array
-    items:
-      type: string
   tags:
     description: Topic tags for cross-referencing.
     type: array
     items:
       type: string
+unevaluatedProperties: false
