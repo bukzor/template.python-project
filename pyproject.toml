@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "Python project template with copier support"
 readme = "README.md"
 requires-python = ">=3.13"
-dependencies = []
+dependencies = ["llm-kb"]
 
 [dependency-groups]
 dev = [
@@ -33,3 +33,6 @@ reportIncompatibleVariableOverride = "error"
 reportMissingImports = "error"
 reportMissingTypeStubs = false
 exclude = [".venv", "__pycache__", "node_modules", "trash"]
+
+[tool.uv.sources]
+llm-kb = { path = "../bukzor-agent-skills/llm-kb", editable = true }
