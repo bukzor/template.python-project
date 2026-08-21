@@ -2,16 +2,23 @@
 managed-by: Skill(llm-subtask)
 cost-benefit-sweh:
   timebox:
-    "@value": 0
+    "@value": 2
     rationale:
-      "pure aggregator: all items are child todo.kb refs, Later section empty;
-      children carry their own ratings"
+      "mostly aggregator, plus one remaining scaffold fix (ci.yml) harvested
+      from the python-typed-json release; todo.kb children carry their own
+      ratings"
     confidence: confident
   benefit-2w:
-    "@value": 0
+    "@value": 1
+    rationale:
+      "unblocks first CI signal for freshly-scaffolded projects; the other
+      harvested fixes (unsatisfiable pytest-pyright pin, license mismatch,
+      hardcoded pyupgrade target, stale pre-commit-hooks rev, missing PyPI
+      metadata) already landed"
     confidence: confident
 ---
 
+- [ ] Add a `ci.yml` workflow (`.github/` is entirely absent today)
 - [ ] [todo.kb/2026-06-24-000-copier-projecttype-app--lib-question.md](todo.kb/2026-06-24-000-copier-projecttype-app--lib-question.md)
       — add `project_type: app | lib` copier question (library compatibility)
 - [ ] [todo.kb/2026-06-27-000-harvest-template-improvements-from-basedpyright-as-pyright.md](todo.kb/2026-06-27-000-harvest-template-improvements-from-basedpyright-as-pyright.md)

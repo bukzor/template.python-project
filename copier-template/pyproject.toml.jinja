@@ -3,9 +3,14 @@ name = "{{ project_name }}"
 version = "0.1.0"
 description = "{{ description }}"
 readme = "README.md"
+license = "Apache-2.0"
+authors = [{ name = "{{ author_name }}", email = "{{ author_email }}" }]
 requires-python = ">={{ python_version }}"
 dependencies = []
-
+{% if github_username %}
+[project.urls]
+Repository = "https://github.com/{{ github_username }}/{{ project_name }}"
+{% endif %}
 [dependency-groups]
 dev = [
   "black>=25.1.0",
@@ -15,7 +20,7 @@ dev = [
   "pre-commit>=4.3.0",
   "pyright>=1.1.405",
   "pytest>=8.4.2",
-  "pytest-pyright>=0.0.7",
+  "pytest-pyright>=0.0.6",
   "pyupgrade>=3.19.0",
 ]
 
