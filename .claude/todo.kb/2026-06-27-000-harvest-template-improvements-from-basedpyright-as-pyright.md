@@ -61,9 +61,12 @@ Three concrete divergences already surfaced — all present in
 
 - [ ] **app-form, no `[build-system]`** → the `project_type: app | lib` work
       (see `2026-06-24-000-...`). _Parameterizable._
-- [ ] **`pytest-pyright>=0.0.7` is unresolvable** — only `<=0.0.6` exists on
+- [x] **`pytest-pyright>=0.0.7` is unresolvable** — only `<=0.0.6` exists on
       PyPI, so the scaffolded dev env can't resolve as shipped. Lower the pin
       (or drop the upper intent). _Upstream-generic — breaks every scaffold._
+      Resolved 2026-08-21 (commit `b9391bd`): pinned to `>=0.0.6`, alongside
+      four other one-line scaffold fixes (license mismatch, hardcoded
+      `pyupgrade` target, stale `pre-commit-hooks` rev, missing PyPI metadata).
 - [ ] **no CI is scaffolded** — the template's workflows live outside
       `copier-template/`, so generated repos get none. Add a `ci.yml` (strict
       pyright + pytest) and optionally `dependabot.yml`. _Upstream-generic._
