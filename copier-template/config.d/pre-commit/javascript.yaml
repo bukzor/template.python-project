@@ -8,6 +8,6 @@ repos:
     hooks:
       - id: eslint
         name: eslint
-        entry: pnpm-run eslint --fix
+        entry: bin/pnpm-run eslint --fix
         language: system
         types_or: [javascript, jsx, ts, tsx]
